@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>天池可视化参赛作品</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/jumbotron.css" rel="stylesheet">
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">“飞凤数创”2018全球物联网数据创新大赛</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>无锡市天气状况</h1>
+        <h2>参赛选手: <a href="https://github.com/mggger">王家敏</a></h2>
+        <p>对无锡市的天气数据进行一个总结分析，以动态的方式，展现无锡市天气按照季节周期性变化的趋势，包括天气状况、气温和风向；</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+            <h2>历史天气状况</h2>
+            <p>通过交互的形式，动态展示无锡市历史天气温度，状况</p>
+            <p>通过颜色获取不同的天气状况，通过表格展示重要信息</p>
+            <p><a class="btn btn-info" href="http://localhost:5006/weather" role="button">查看详情</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>历史风向图</h2>
+            <p>以动态的方式展示无锡市历史风向，以及风力强度的变化</p>
+            <p>随着年份每5s变化一次</p>
+            <p><a class="btn btn-info" href="http://localhost:5006/wind" role="button">查看详情</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>预测是否适合出行</h2>
+            <p>逻辑回归根据今天的数据判断明天是否适合出行</p>
+            <p>非雨，雾，霾天气为适合出行</p>
+            <p><a class="btn btn-info" data-toggle="modal" data-target="#PredictModal" role="button">查看详情</a></p>
+        </div>
+    </div>
+
+    <div class="modal fade" id="PredictModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: center">
+                    <h4 class="modal-title" id="myModalLabel">
+                        asd
+                    </h4>
+                </div>
+                <div class="modal-body" style="text-align: center">
+                        <img src="static/images/bad.jpeg" height="400" width="400">    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+    <footer>
+        <p>2018-08 王家敏</p>
+    </footer>
+</div> <!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="static/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $.get("/predict", function(data) {
+        result = data['data'];
+        console.log(result)
+        if (result == '1') {
+            $(".modal-title").html("Good （＾∇＾）适合出行哦");
+            $("img").attr("src", "static/images/good.jpeg");
+        } else {
+            $(".modal-title").html("Sad ( ´▽｀) 并不适合出行");
+            $("img").attr("src", "static/images/bad.jpeg");
+        }
+    })
+})
+</script>
+</body>
+</html>
